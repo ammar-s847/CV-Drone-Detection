@@ -6,5 +6,6 @@ matplotlib
 seaborn
 torch
 torchvision
+torch-summary
 pillow
 kaggle
