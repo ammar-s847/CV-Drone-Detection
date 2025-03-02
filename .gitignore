@@ -4,3 +4,6 @@
 .pyc
 .env
 /__pycache__/
+
+# Ignore model checkpoints
+best_* 
