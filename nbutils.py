@@ -20,6 +20,11 @@ from torchsummary import summary
 from sklearn.model_selection import KFold
 from sklearn.metrics import f1_score, precision_score, recall_score
 
+
+####################################################
+# Raw Data Helpers #################################
+####################################################
+
 # NOTE: exclude BIRD class
 CLASS_MAPPING = {
     0: "AIRPLANE",
@@ -116,7 +121,10 @@ def create_dataset(images_path, labels_path):
 
     return pd.DataFrame(data)
 
-# Metrics
+
+####################################################
+# Metrics ##########################################
+####################################################
 
 def calculate_iou(pred_box, target_box):
     """Calculate IoU between single predicted and target box"""
@@ -262,3 +270,51 @@ def evaluate_model(model, dataset, num_samples=10):
         'f1_score': np.mean(f1_scores)
     }
 
+
+####################################################
+# Dataset and Data Loaders #########################
+####################################################
+class DroneDetectionDataset(Dataset):
+    def __init__(self, dataframe, transform=None):
+        self.df = dataframe
+        self.transform = transform
+        self.unique_images = self.df.groupby('image_path').agg({
+            'x_center': list,
+            'y_center': list,
+            'width': list,
+            'height': list,
+            'class': list
+        }).reset_index()
+
+    def __len__(self):
+        return len(self.unique_images)
+
+    def __getitem__(self, idx):
+        row = self.unique_images.iloc[idx]
+
+        image = Image.open(row['image_path'])
+        if self.transform:
+            image = self.transform(image)
+
+        # Create a single box tensor
+        boxes = torch.zeros((1, 5))  # Shape: (1, 5)
+        boxes[:, 0] = -1  # Initialize with -1 for empty boxes
+
+        # Only use the first detection for now
+        if len(row['x_center']) > 0:
+            class_name = row['class'][0]
+            class_id = 0  # AIRPLANE
+            if class_name == 'DRONE':
+                class_id = 1
+            elif class_name == 'HELICOPTER':
+                class_id = 2
+
+            boxes[0] = torch.tensor([
+                float(class_id),
+                float(row['x_center'][0]),
+                float(row['y_center'][0]),
+                float(row['width'][0]),
+                float(row['height'][0])
+            ])
+
+        return image, boxes
