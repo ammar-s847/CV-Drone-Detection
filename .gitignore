@@ -7,3 +7,4 @@
 
 # Ignore model checkpoints
 best_* 
+/runs/
