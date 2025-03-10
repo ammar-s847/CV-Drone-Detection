@@ -1,24 +1,11 @@
 import os
 import re
 import time
-import shutil
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from tqdm import tqdm
-from pathlib import Path
 from PIL import Image
 import torch
-import torch.nn as nn
-import torch.optim as optim
-import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader
-import torchvision
-import torchvision.transforms as transforms
-from torchsummary import summary
-from sklearn.model_selection import KFold
-from sklearn.metrics import f1_score, precision_score, recall_score
+from torch.utils.data import Dataset
 
 
 ####################################################

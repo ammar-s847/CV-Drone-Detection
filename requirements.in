@@ -9,4 +9,5 @@ torchvision
 torch-summary
 pillow
 kaggle
+ultralytics
 pyyaml==5.1
