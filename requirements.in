@@ -11,3 +11,4 @@ pillow
 kaggle
 ultralytics
 pyyaml==5.1
+effdet
