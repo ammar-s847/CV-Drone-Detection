@@ -14,7 +14,6 @@ https://universe.roboflow.com/ahmedmohsen/drone-detection-new-peksv
 Using the following metrics/benchmarks, we'll be evaluating each model's ability to distinguish between aerial vehicle types and produce bounding boxes for them within the image:
 - Mean Average Precision (mAP)
 - Intersection over Union (IoU)
-- F1 Score
 
 Alongside the metrics above, we'll be profiling the models to determine performance:
 - Inference Latency
