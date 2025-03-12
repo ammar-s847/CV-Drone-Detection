@@ -19,5 +19,3 @@ Alongside the metrics above, we'll be profiling the models to determine performa
 - Inference Latency
 - Model Size
 - Training Time
-
-
