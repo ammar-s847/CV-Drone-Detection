@@ -10,5 +10,6 @@ torch-summary
 pillow
 kaggle
 ultralytics
-pyyaml==5.1
+pyyaml
 effdet
+torchmetrics
